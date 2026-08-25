@@ -1,0 +1,142 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-user-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /users/}}]
+      rewrite: {uri: /api/users/}
+      route: [{destination: {host: user-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-search-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /search}}]
+      rewrite: {uri: /api/search}
+      route: [{destination: {host: search-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-cart-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /cart/}}]
+      rewrite: {uri: /api/carts/}
+      route: [{destination: {host: cart-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-wishlist-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /wishlist/}}]
+      rewrite: {uri: /api/wishlists/}
+      route: [{destination: {host: wishlist-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-order-processing-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /order-processing}}]
+      rewrite: {uri: /api/orders/process}
+      route: [{destination: {host: order-processing-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-order-taking-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /orders}}]
+      rewrite: {uri: /api/orders}
+      route: [{destination: {host: order-taking-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-payment-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /payments}}]
+      rewrite: {uri: /api/payments/authorize}
+      route: [{destination: {host: payment-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-logistics-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /logistics}}]
+      rewrite: {uri: /api/shipments}
+      route: [{destination: {host: logistics-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-warehouse-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /warehouse/}}]
+      rewrite: {uri: /api/inventory/}
+      route: [{destination: {host: warehouse-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-notification-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /notifications}}]
+      rewrite: {uri: /api/notifications}
+      route: [{destination: {host: notification-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-recommendation-service
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match: [{uri: {prefix: /recommendations/}}]
+      rewrite: {uri: /api/recommendations/}
+      route: [{destination: {host: recommendation-service.ecommerce.svc.cluster.local, port: {number: 8000}}}]

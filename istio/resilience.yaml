@@ -1,0 +1,113 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: user-service, namespace: ecommerce}
+spec:
+  host: user-service.ecommerce.svc.cluster.local
+  trafficPolicy:
+    connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}
+    outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: search-service, namespace: ecommerce}
+spec: {host: search-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: cart-service, namespace: ecommerce}
+spec: {host: cart-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: wishlist-service, namespace: ecommerce}
+spec: {host: wishlist-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: order-taking-service, namespace: ecommerce}
+spec: {host: order-taking-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: order-processing-service, namespace: ecommerce}
+spec: {host: order-processing-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: payment-service, namespace: ecommerce}
+spec: {host: payment-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: logistics-service, namespace: ecommerce}
+spec: {host: logistics-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: warehouse-service, namespace: ecommerce}
+spec: {host: warehouse-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: notification-service, namespace: ecommerce}
+spec: {host: notification-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata: {name: recommendation-service, namespace: ecommerce}
+spec: {host: recommendation-service.ecommerce.svc.cluster.local, trafficPolicy: {connectionPool: {tcp: {maxConnections: 100}, http: {http1MaxPendingRequests: 100}}, outlierDetection: {consecutive5xxErrors: 3, interval: 30s, baseEjectionTime: 30s, maxEjectionPercent: 50}}}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: user-service, namespace: ecommerce}
+spec: {hosts: [user-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: user-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: search-service, namespace: ecommerce}
+spec: {hosts: [search-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: search-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: cart-service, namespace: ecommerce}
+spec: {hosts: [cart-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: cart-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: wishlist-service, namespace: ecommerce}
+spec: {hosts: [wishlist-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: wishlist-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: order-taking-service, namespace: ecommerce}
+spec: {hosts: [order-taking-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: order-taking-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: order-processing-service, namespace: ecommerce}
+spec: {hosts: [order-processing-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: order-processing-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: payment-service, namespace: ecommerce}
+spec: {hosts: [payment-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: payment-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: logistics-service, namespace: ecommerce}
+spec: {hosts: [logistics-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: logistics-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: warehouse-service, namespace: ecommerce}
+spec: {hosts: [warehouse-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: warehouse-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: notification-service, namespace: ecommerce}
+spec: {hosts: [notification-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: notification-service.ecommerce.svc.cluster.local}}]}]}
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata: {name: recommendation-service, namespace: ecommerce}
+spec: {hosts: [recommendation-service.ecommerce.svc.cluster.local], gateways: [mesh], http: [{retries: {attempts: 3, perTryTimeout: 2s, retryOn: "5xx,reset,connect-failure"}, timeout: 10s, route: [{destination: {host: recommendation-service.ecommerce.svc.cluster.local}}]}]}

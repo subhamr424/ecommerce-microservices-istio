@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: user-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: user-service}}, template: {metadata: {labels: {app: user-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/user-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: user-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: search-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: search-service}}, template: {metadata: {labels: {app: search-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/search-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: search-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: catalog-service-v1, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: catalog-service, version: v1}}, template: {metadata: {labels: {app: catalog-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/catalog-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: catalog-service}, {name: SERVICE_VERSION, value: v1}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: catalog-service-v2, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: catalog-service, version: v2}}, template: {metadata: {labels: {app: catalog-service, version: v2}}, spec: {containers: [{name: app, image: ecommerce/catalog-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: catalog-service}, {name: SERVICE_VERSION, value: v2}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: cart-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: cart-service}}, template: {metadata: {labels: {app: cart-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/cart-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: cart-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: wishlist-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: wishlist-service}}, template: {metadata: {labels: {app: wishlist-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/wishlist-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: wishlist-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: order-taking-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: order-taking-service}}, template: {metadata: {labels: {app: order-taking-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/order-taking-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: order-taking-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: order-processing-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: order-processing-service}}, template: {metadata: {labels: {app: order-processing-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/order-processing-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: order-processing-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: payment-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: payment-service}}, template: {metadata: {labels: {app: payment-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/payment-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: payment-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: logistics-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: logistics-service}}, template: {metadata: {labels: {app: logistics-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/logistics-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: logistics-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: warehouse-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: warehouse-service}}, template: {metadata: {labels: {app: warehouse-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/warehouse-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: warehouse-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: notification-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: notification-service}}, template: {metadata: {labels: {app: notification-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/notification-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: notification-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: recommendation-service, namespace: ecommerce}
+spec: {replicas: 1, selector: {matchLabels: {app: recommendation-service}}, template: {metadata: {labels: {app: recommendation-service, version: v1}}, spec: {containers: [{name: app, image: ecommerce/recommendation-service:latest, imagePullPolicy: IfNotPresent, ports: [{containerPort: 8000, name: http}], env: [{name: SERVICE_NAME, value: recommendation-service}], resources: {requests: {cpu: 10m, memory: 64Mi}, limits: {cpu: 100m, memory: 128Mi}}, readinessProbe: {httpGet: {path: /health, port: http}}, livenessProbe: {httpGet: {path: /health, port: http}}}]}}}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: user-service, namespace: ecommerce}
+spec: {selector: {app: user-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: search-service, namespace: ecommerce}
+spec: {selector: {app: search-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: catalog-service, namespace: ecommerce}
+spec: {selector: {app: catalog-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: cart-service, namespace: ecommerce}
+spec: {selector: {app: cart-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: wishlist-service, namespace: ecommerce}
+spec: {selector: {app: wishlist-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: order-taking-service, namespace: ecommerce}
+spec: {selector: {app: order-taking-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: order-processing-service, namespace: ecommerce}
+spec: {selector: {app: order-processing-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: payment-service, namespace: ecommerce}
+spec: {selector: {app: payment-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: logistics-service, namespace: ecommerce}
+spec: {selector: {app: logistics-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: warehouse-service, namespace: ecommerce}
+spec: {selector: {app: warehouse-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: notification-service, namespace: ecommerce}
+spec: {selector: {app: notification-service}, ports: [{name: http, port: 8000, targetPort: http}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: recommendation-service, namespace: ecommerce}
+spec: {selector: {app: recommendation-service}, ports: [{name: http, port: 8000, targetPort: http}]}

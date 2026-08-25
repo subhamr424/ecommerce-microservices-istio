@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-generator
+  namespace: ecommerce
+  labels: {app: traffic-generator}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: traffic-generator}}
+  template:
+    metadata: {labels: {app: traffic-generator, version: v1}}
+    spec:
+      containers:
+        - name: traffic
+          image: curlimages/curl:8.12.1
+          command: ["/bin/sh", "-c"]
+          args:
+            - >-
+              sleep 5;
+              while true; do
+                curl --retry 3 --retry-delay 2 -fsS http://search-service:8000/api/search?q=tee >/dev/null;
+                curl --retry 3 --retry-delay 2 -fsS http://recommendation-service:8000/api/recommendations/u-100 >/dev/null;
+                curl --retry 3 --retry-delay 2 -fsS -X POST http://order-taking-service:8000/api/orders >/dev/null;
+                sleep 2;
+              done
+          resources:
+            requests: {cpu: 5m, memory: 16Mi}
+            limits: {cpu: 30m, memory: 48Mi}
