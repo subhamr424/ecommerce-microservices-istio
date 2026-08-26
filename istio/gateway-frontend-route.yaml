@@ -1,0 +1,21 @@
+# Catch-all route for the frontend. Istio merges multiple VirtualServices bound to
+# the same gateway+host by path specificity, so the existing /catalog, /cart,
+# /orders, etc. routes (all more specific prefixes) continue to take precedence
+# over this root "/" route — but if you see the frontend swallowing API calls,
+# move this file's apply order after the other istio/ manifests, or check
+# `istioctl analyze -n ecommerce` for a route-precedence warning.
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: browser-frontend
+  namespace: ecommerce
+spec:
+  hosts: ["*"]
+  gateways: ["ecommerce-gateway"]
+  http:
+    - match:
+        - uri: {prefix: /}
+      route:
+        - destination:
+            host: ecommerce-frontend.ecommerce.svc.cluster.local
+            port: {number: 80}
